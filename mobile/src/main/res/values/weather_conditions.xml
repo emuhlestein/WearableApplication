@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="weather_conditions">
+        <item>Clear Day</item>
+        <item>Clear Night</item>
+        <item>Cloudy</item>
+        <item>Cloudy Night</item>
+        <item>Fog</item>
+        <item>Partly Cloudy</item>
+        <item>Rain</item>
+        <item>Sleet</item>
+        <item>Snow</item>
+        <item>Sunny</item>
+        <item>Wind</item>
+    </string-array>
+</resources>
