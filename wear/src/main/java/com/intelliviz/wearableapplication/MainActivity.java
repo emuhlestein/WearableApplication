@@ -22,17 +22,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainActivity extends Activity {
-    BroadcastReceiver _broadcastReceiver;
+    BroadcastReceiver mBroadcastReceiver;
     private final SimpleDateFormat _sdfWatchTime = new SimpleDateFormat("HH:mm");
     private final SimpleDateFormat _sdfWatchDate = new SimpleDateFormat("E, MMM d yyyy");
-    static final int MSG_UPDATE_TIME = 0;
     public static final String LOCAL_ACTION = "weatherBroadCast";
     public static final String WEATHER_MINTEMP = "mintemp";
     public static final String WEATHER_MAXTEMP = "mmatemp";
     public static final String WEATHER_IMAGE = "weatheriamge";
     private GoogleApiClient mGoogleApiClient;
-
-    private BroadcastReceiver mBroadcastReceiver;
 
     private TextView mTimeTextView;
     private TextView mDateTextView;
@@ -56,7 +53,6 @@ public class MainActivity extends Activity {
                 mDateTextView = (TextView) stub.findViewById(R.id.dateText);
                 mDateTextView.setText(_sdfWatchDate.format(new Date()));
                 mConditionImageView = (ImageView) stub.findViewById(R.id.conditionImage);
-                //mConditionImageView.setImageResource(R.mipmap.rain);
                 Drawable image = ResourcesCompat.getDrawable(getResources(), R.mipmap.rain, null);
                 mConditionImageView.setImageDrawable(image);
                 Drawable drawable = mConditionImageView.getDrawable();
@@ -68,9 +64,6 @@ public class MainActivity extends Activity {
                 mMaxTempTextView = (TextView) stub.findViewById(R.id.maxTempText);
             }
         });
-
-        mBroadcastReceiver = createBroadcastReceiver();
-
     }
 
     @Override
@@ -113,35 +106,4 @@ public class MainActivity extends Activity {
             }
         }
     };
-
-    private BroadcastReceiver createBroadcastReceiver() {
-        return new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                int temp = intent.getIntExtra(WEATHER_MINTEMP, 0);
-                mTimeTextView.setText(temp);
-            }
-        };
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        _broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context ctx, Intent intent) {
-                if (intent.getAction().compareTo(Intent.ACTION_TIME_TICK) == 0)
-                    mTimeTextView.setText(_sdfWatchTime.format(new Date()));
-            }
-        };
-
-        registerReceiver(_broadcastReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (_broadcastReceiver != null)
-            unregisterReceiver(_broadcastReceiver);
-    }
 }

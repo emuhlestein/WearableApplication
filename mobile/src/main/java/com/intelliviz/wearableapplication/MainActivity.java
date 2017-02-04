@@ -180,6 +180,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             Asset asset = createAssetFromBitmap(bitmap);
             map.putAsset("imageData", asset);
 
+            if(mMinTemp.getText().equals("") || mMaxTemp.getText().equals("")) {
+                return;
+            }
             int minTemp = Integer.parseInt(mMinTemp.getText().toString());
             map.putInt("mintemp", minTemp);
             int maxTemp = Integer.parseInt(mMaxTemp.getText().toString());
